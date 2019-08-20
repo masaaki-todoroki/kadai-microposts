@@ -29,6 +29,62 @@ class User extends Authenticatable
     
     public function microposts()
     {
-        return $this->hasMany(Micropost::class);
+        return $this -> hasMany(Micropost::class);
+    }
+    
+    //これを書くことで、$user -> followings で$userがフォローしているUser達を取得できる！
+    public function followings()
+    {
+        return $this -> belongsToMany(User::class, 'user_follow', 'user_id', 'follow_id') -> withTimestamps();
+    }
+
+    //これを書くことで、$user -> followers で$userをフォローしているUser達を取得できる！
+    public function followers()
+    {
+        return $this -> belongsToMany(User::class, 'user_follow', 'follow_id', 'user_id') -> withTimestamps();
+    }
+    
+    //フォロー、アンフォロー → 中間テーブルのレコードを保存・削除すること
+    //$user -> follow($user_id) でフォローできるように
+    public function follow($userId)
+    {
+        //既にフォローしているかの確認
+        $exist = $this -> is_following($userId);
+        
+        //相手が自分自身ではないかの確認
+        $its_me = $this -> id == $userId;
+        
+        if($exist || $its_me) {
+            //既にフォローしていれば何もしない
+            return false;
+        } else {
+            //未フォローであればフォローする
+            $this -> followings() -> attach($userId);
+            return true;
+        }
+    }
+    
+    //$user -> unfollow($user_id)でアンフォローできるように
+    public function unfollow($userId)
+    {
+        //既にフォローしているかの確認
+        $exist = $this -> is_following($userId);
+        
+        //相手が自分自身ではないかの確認
+        $its_me = $this -> id == $userId;
+        
+        if($exist && !$its_me) {
+            //既にフォローしていればフォローを外す
+            $this -> followings() -> detach($userId);
+            return true;
+        } else {
+            //未フォローであれば何もしない
+            return false;
+        }
+    }
+    
+    public function is_following($userId)
+    {
+        return $this -> followings() -> where('follow_id', $userId) -> exists();                        
     }
 }
