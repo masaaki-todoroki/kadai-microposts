@@ -94,4 +94,49 @@ class User extends Authenticatable
         $follow_user_ids[] = $this -> id;
         return Micropost::whereIn('user_id', $follow_user_ids);
     }
+    
+    //これを書くことで、$user -> favorites で$userがお気に入りにしているMicropost達を取得できる！
+    public function favorites()
+    {
+        // ここは、例えば、user_idが2のデータ全てを取ってくるという処理。 取ってくる元がMicropostモデルのインスタンの配列ということ
+        return $this -> belongsToMany(Micropost::class, 'favorites', 'user_id', 'micropost_id') -> withTimestamps();
+    }
+    
+    //favorite、unfavorite → 中間テーブルのレコードを保存・削除すること
+    //$user -> faver($micropost_id) でお気に入りにできるように
+    public function favorite($micropostId)
+    {
+        //既にお気に入りにしているかの確認
+        $exist = $this -> is_favoriting($micropostId);
+        
+        if($exist) {
+            //既にお気に入りにしていれば何もしない
+            return false;
+        } else {
+            //まだお気に入りでなければお気に入りに登録する
+            $this -> favorites() -> attach($micropostId);
+            return true;
+        }
+    }
+    
+    //$user -> unfaver($micropostid)でお気に入りを解除できるように
+    public function unfavorite($micropostId)
+    {
+        //既にお気に入りにしているかの確認
+        $exist = $this -> is_favoriting($micropostId);
+        
+        if($exist) {
+            //既にお気に入りに登録されていればお気に入りを解除する
+            $this -> favorites() -> detach($micropostId);
+            return true;
+        } else {
+            //そもそもお気に入りに登録されていなければ何もしない
+            return false;
+        }
+    }
+    
+    public function is_favoriting($micropostId)
+    {
+        return $this -> favorites() -> where('micropost_id', $micropostId) -> exists();                        
+    }
 }
