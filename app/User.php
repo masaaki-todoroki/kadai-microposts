@@ -139,4 +139,9 @@ class User extends Authenticatable
     {
         return $this -> favorites() -> where('micropost_id', $micropostId) -> exists();                        
     }
+    
+    public function comments()
+    {
+        return $this -> belongsToMany(Micropost::class, 'comments', 'user_id', 'micropost_id') -> withTimestamps();
+    }
 }

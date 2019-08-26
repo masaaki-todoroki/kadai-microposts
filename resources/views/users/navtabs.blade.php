@@ -5,6 +5,11 @@
         </a>
     </li>
     <li class="nav-item">
+        <a href="{{ route('users.comments', ['id' => $user -> id]) }}" class="nav-link {{ Request::is('users/*/comments') ? 'active' : '' }}">
+            Comments<span class="badge badge-secondary">{{ $count_comments }}</span>
+        </a>
+    </li>
+    <li class="nav-item">
         <a href="{{ route('users.followings', ['id' => $user -> id]) }}" class="nav-link {{ Request::is('users/*/followings') ? 'active' : '' }}">
             Followings<span class="badge badge-secondary">{{ $count_followings }}</span>
         </a>
@@ -15,7 +20,7 @@
         </a>
     </li>
     <li class="nav-item">
-        <a href="{{ route('users.favorites', ['id' => $user -> id]) }}" class="nav-link {{ Request::is('microposts/*/favorites') ? 'active' : '' }}">
+        <a href="{{ route('users.favorites', ['id' => $user -> id]) }}" class="nav-link {{ Request::is('users/*/favorites') ? 'active' : '' }}">
             Favorites<span class="badge badge-secondary">{{ $count_favorites }}</span>
         </a>
     </li>

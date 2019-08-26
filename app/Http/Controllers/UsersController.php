@@ -78,4 +78,21 @@ class UsersController extends Controller
         
         return view('microposts.favorites', $data);
     }
+    
+    public function comments($id)
+    {
+        // UserはUserモデルのこと。$idはgetで渡ってくるはず。Userモデルの中から$idのユーザを見つけるということ。
+        $user = User::find($id);
+        // 見つけたユーザーにおいて、Userモデルのfavorites()メソッドを呼び出している。
+        $comments = $user -> comments() -> paginate(10);
+        
+        $data = [
+            'user' => $user,
+            'comments' => $comments,
+        ];
+        
+        $data += $this -> counts($user);
+        
+        return view('microposts.comments', $data);
+    }
 }

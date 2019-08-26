@@ -1,5 +1,5 @@
 <ul class="list-unstyled">
-    <!-- ↓ここが$micropostsなので、渡ってくる元のfavorites.blade.phpのニックネームをmicropostsにした！-->
+    <!-- ↓ここが$micropostsなので、渡ってくる元のfavorites.blade.phpのニックネームをmicropostsにした -->
     @foreach ($microposts as $micropost)
         <li class="media mb-3">
             <img class="mr-2 rounded" src="{{ Gravatar::src($micropost->user->email, 50) }}" alt="">
@@ -10,16 +10,36 @@
                 <div>
                     <p class="mb-0">{!! nl2br(e($micropost->content)) !!}</p>
                 </div>
-                <div style="display: flex;">
-                    <div style="display: inline-block; margin-right: 10px;">
-                        @include('users.favorites_button', ['micropost' => $micropost])
+                
+                <div class="post-list">
+                    <div style="display: flex;">
+                        <div style="display: inline-block; margin-right: 10px;">
+                            @include('users.favorites_button', ['micropost' => $micropost])
+                        </div>
+                        <div style="display: inline-block; margin-right: 10px;">
+                            <button class="btn btn-secondary comment-btn comment_btn_show" id="commentBtn">comment</button>
+                        </div>
+                        <div style="display: inline-block; margin-right: 10px;">
+                            @if (Auth::id() == $micropost -> user_id)
+                                {!! Form::open(['route' => ['microposts.destroy', $micropost->id], 'method' => 'delete']) !!}
+                                    {!! Form::submit('Delete', ['class' => 'btn btn-danger btn-sm']) !!}
+                                {!! Form::close() !!}
+                            @endif
+                        </div>
+                        <div style="display: inline-block; margin-right: 10px; font-size: 8px;">
+                            <a href="https://www.yahoo.co.jp/">このスレッドを表示</a>
+                        </div>
                     </div>
-                    <div style="display: inline-block;">
-                        @if (Auth::id() == $micropost->user_id)
-                            {!! Form::open(['route' => ['microposts.destroy', $micropost->id], 'method' => 'delete']) !!}
-                                {!! Form::submit('Delete', ['class' => 'btn btn-danger btn-sm']) !!}
+                    <div id="commentForm" class="comment-form comment__form__hidden">
+                        <div class="comment__form__border mt20 mb20 pt10 pb10 pr10 pl10">
+                            <div id="commentFormCloseBtn" class="comment-form-close-btn">
+                                <i class="comment__form__close__btn commnet__form__close__btn fas fa-times-circle"></i>
+                            </div>
+                            {!! Form::open() !!}
+                                {!! Form::text('content', null, ['class' => 'form-control mt10 mb10']) !!}
+                                {!! Form::submit('コメントする', ['class' => 'btn btn-info']) !!}
                             {!! Form::close() !!}
-                        @endif
+                        </div>
                     </div>
                 </div>
             </div>
