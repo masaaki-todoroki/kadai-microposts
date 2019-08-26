@@ -17,12 +17,13 @@
 }
 .commnet__form__close__btn {
     position: absolute;
-    top: -8px;
-    left: -8px;
+    top: -2px;
+    left: -20px;
     color: #ced4da;
 }
 .commnet__form__close__btn:hover {
     cursor: pointer;
+    color: #6c8c9c;
 }
 
 .mt10 {
