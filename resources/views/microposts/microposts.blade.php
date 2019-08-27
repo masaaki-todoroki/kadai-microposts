@@ -27,7 +27,9 @@
                             @endif
                         </div>
                         <div style="display: inline-block; margin-right: 10px; font-size: 8px;">
-                            <a href="https://www.yahoo.co.jp/">このスレッドを表示</a>
+                            <a href="{{ route('microposts.thread', ['id' => $micropost -> id]) }}">
+                                このスレッドを表示
+                            </a>
                         </div>
                     </div>
                     <div id="commentForm" class="comment-form comment__form__hidden">
@@ -35,7 +37,7 @@
                             <div id="commentFormCloseBtn" class="comment-form-close-btn">
                                 <i class="comment__form__close__btn commnet__form__close__btn fas fa-times-circle"></i>
                             </div>
-                            {!! Form::open() !!}
+                            {!! Form::open(['route' => ['microposts.comment', $micropost->id], 'method' => 'post']) !!}
                                 {!! Form::text('content', null, ['class' => 'form-control mt10 mb10']) !!}
                                 {!! Form::submit('コメントする', ['class' => 'btn btn-info']) !!}
                             {!! Form::close() !!}
