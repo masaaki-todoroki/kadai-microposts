@@ -27,9 +27,9 @@
                     <img class="mr-2 rounded" src="{{ Gravatar::src($comment->user->email, 50) }}" alt="">
                     <div class="media-body">
                         {!! link_to_route('users.show', $comment->user->name, ['id' => $microposter->id]) !!}
-                        <span class="text-muted">posted at {{ $micropost->created_at }}</span>
+                        <span class="text-muted">posted at {{ $comment->created_at }}</span>
                         <div>
-                            <p class="mb-0">{!! nl2br(e($micropost->content)) !!}</p>
+                            <p class="mb-0">{!! nl2br(e($comment->content)) !!}</p>
                         </div>
                     </div>
                 </li>
