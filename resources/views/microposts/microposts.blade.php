@@ -18,12 +18,12 @@
                             @include('users.favorites_button', ['micropost' => $micropost])
                         </div>
                         <div style="display: inline-block; margin-right: 10px;">
-                            <button class="btn btn-secondary comment-btn comment_btn_show" id="commentBtn">コメントする</button>
+                            <button class="btn btn-secondary btn-sm comment-btn comment_btn_show" id="commentBtn">コメントする</button>
                         </div>
                         <div style="display: inline-block; margin-right: 10px;">
                             @if (Auth::id() == $micropost -> user_id)
                                 {!! Form::open(['route' => ['microposts.destroy', $micropost->id], 'method' => 'delete']) !!}
-                                    {!! Form::submit('このコメントを削除', ['class' => 'btn btn-danger']) !!}
+                                    {!! Form::submit('このコメントを削除', ['class' => 'btn btn-danger btn-sm']) !!}
                                 {!! Form::close() !!}
                             @endif
                         </div>

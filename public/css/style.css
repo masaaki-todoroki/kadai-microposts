@@ -25,6 +25,14 @@
     cursor: pointer;
     color: #6c8c9c;
 }
+.comment-bar {
+    position: absolute;
+    top: -34px;
+    left: 22px;
+    width: 4px;
+    height: 30px;
+    background-color: #ccd6dd;
+}
 
 .mt10 {
     margin-top: 10px;
