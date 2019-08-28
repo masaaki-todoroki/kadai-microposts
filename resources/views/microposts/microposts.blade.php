@@ -5,7 +5,8 @@
             <img class="mr-2 rounded" src="{{ Gravatar::src($micropost->user->email, 50) }}" alt="">
             <div class="media-body">
                 <div>
-                    {!! link_to_route('users.show', $micropost->user->name, ['id' => $micropost->user->id]) !!} <span class="text-muted">posted at {{ $micropost->created_at }}</span>
+                    {!! link_to_route('users.show', $micropost->user->name, ['id' => $micropost->user->id]) !!} 
+                    <span class="text-muted">posted at {{ $micropost->created_at }}</span>
                 </div>
                 <div>
                     <p class="mb-0">{!! nl2br(e($micropost->content)) !!}</p>
@@ -17,20 +18,20 @@
                             @include('users.favorites_button', ['micropost' => $micropost])
                         </div>
                         <div style="display: inline-block; margin-right: 10px;">
-                            <button class="btn btn-secondary comment-btn comment_btn_show" id="commentBtn">comment</button>
+                            <button class="btn btn-secondary comment-btn comment_btn_show" id="commentBtn">コメントする</button>
                         </div>
                         <div style="display: inline-block; margin-right: 10px;">
                             @if (Auth::id() == $micropost -> user_id)
                                 {!! Form::open(['route' => ['microposts.destroy', $micropost->id], 'method' => 'delete']) !!}
-                                    {!! Form::submit('Delete', ['class' => 'btn btn-danger btn-sm']) !!}
+                                    {!! Form::submit('このコメントを削除', ['class' => 'btn btn-danger']) !!}
                                 {!! Form::close() !!}
                             @endif
                         </div>
-                        <div style="display: inline-block; margin-right: 10px; font-size: 8px;">
-                            <a href="{{ route('microposts.thread', ['id' => $micropost -> id]) }}">
-                                このスレッドを表示
-                            </a>
-                        </div>
+                    </div>
+                    <div style="display: inline-block; margin-right: 10px; font-size: 13px;">
+                        <a href="{{ route('microposts.thread', ['id' => $micropost -> id]) }}">
+                            このスレッドを表示
+                        </a>
                     </div>
                     <div id="commentForm" class="comment-form comment__form__hidden">
                         <div class="comment__form__border mt20 mb20 pt10 pb10 pr10 pl10">
