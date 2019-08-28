@@ -32,6 +32,11 @@ class User extends Authenticatable
         return $this -> hasMany(Micropost::class);
     }
     
+    public function comment()
+    {
+        return $this -> hasMany(Micropost::class);
+    }
+    
     //これを書くことで、$user -> followings で$userがフォローしているUser達を取得できる！
     public function followings()
     {
@@ -92,6 +97,7 @@ class User extends Authenticatable
     {
         $follow_user_ids = $this -> followings() -> pluck('users.id') -> toArray();
         $follow_user_ids[] = $this -> id;
+        //dd($follow_user_ids);
         return Micropost::whereIn('user_id', $follow_user_ids);
     }
     

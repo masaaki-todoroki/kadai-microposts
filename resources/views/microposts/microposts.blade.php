@@ -28,11 +28,13 @@
                             @endif
                         </div>
                     </div>
+                    @if($micropost -> comments_count())
                     <div style="display: inline-block; margin-right: 10px; font-size: 13px;">
                         <a href="{{ route('microposts.thread', ['id' => $micropost -> id]) }}">
                             このスレッドを表示
                         </a>
                     </div>
+                    @endif
                     <div id="commentForm" class="comment-form comment__form__hidden">
                         <div class="comment__form__border mt20 mb20 pt10 pb10 pr10 pl10">
                             <div id="commentFormCloseBtn" class="comment-form-close-btn">
