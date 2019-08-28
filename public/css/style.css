@@ -34,6 +34,9 @@
     background-color: #ccd6dd;
 }
 
+.mt6 {
+    margin-top: 6px;
+}
 .mt10 {
     margin-top: 10px;
 }
@@ -45,6 +48,9 @@
 }
 .mb20 {
     margin-bottom: 20px;
+}
+.ml20 {
+    margin-left: 20px;
 }
 .pt10 {
     padding-top: 10px;
